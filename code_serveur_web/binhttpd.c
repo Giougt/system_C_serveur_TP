@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/wait.h>
 #include <unistd.h>
 #include <getopt.h>
 #include <sys/types.h>
@@ -8,15 +9,15 @@
 #include <netinet/in.h>
 #include <regex.h>
 #include <errno.h>
-#include <fcntl.h>
 #include <sys/stat.h>
 #include <time.h>
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <signal.h>
-#include <sys/wait.h>
+#include <fcntl.h>
 
 #define BACKLOG 10
+
 #define BUFFER_SIZE 1024
 
 // Variables globales pour les options
@@ -70,14 +71,14 @@ void load_config(const char *file)
             continue;
         }
 
-        // Analyser les paires clé=valeur
+        
         char key[64], value[256];
         if (sscanf(line, "%63[^=]= \"%255[^\"]\"", key, value) == 2 ||
             sscanf(line, "%63[^=]= '%255[^\']'", key, value) == 2 ||
             sscanf(line, "%63[^=]= %255s", key, value) == 2)
         {
 
-            // Supprimer les espaces blancs autour de la clé
+            
             char *k = key;
             while (*k == ' ' || *k == '\t')
                 k++;
