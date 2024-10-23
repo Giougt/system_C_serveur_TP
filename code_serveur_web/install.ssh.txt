@@ -1,25 +1,27 @@
 #!/bin/bash
+#lauch script 
 
-# Compilation du programme
 gcc -Wall -Werror -o binhttpd binhttpd.c
 
-# Création des répertoires d'installation s'ils n'existent pas
+# create 
+
 mkdir -p ~/opt/binhttpd/usr/sbin
+
 mkdir -p ~/opt/binhttpd/etc
 mkdir -p ~/opt/binhttpd/var/log
 mkdir -p ~/opt/binhttpd/srv/http/root
 
-# Copie de l'exécutable
+
 cp binhttpd ~/opt/binhttpd/usr/sbin/
 
-# Copie du fichier de configuration par défaut s'il n'existe pas
+
+
 if [ ! -f ~/opt/binhttpd/etc/binhttpd.conf ]; then
     cp binhttpd.conf ~/opt/binhttpd/etc/
 fi
 
-# Création du fichier de logs s'il n'existe pas
 if [ ! -f ~/opt/binhttpd/var/log/binhttpd.log ]; then
     touch ~/opt/binhttpd/var/log/binhttpd.log
 fi
 
-echo "Installation terminée."
+echo "install finish"
