@@ -35,7 +35,7 @@ char *config_file = NULL;
 char *log_file = NULL;
 
 int debug_mode = 0;
-int port = 5000; 
+int port = 42064; 
 FILE *log_fp = NULL;
 
 
