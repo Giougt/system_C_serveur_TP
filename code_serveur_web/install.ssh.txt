@@ -1,27 +1,58 @@
 #!/bin/bash
-#lauch script 
 
-gcc -Wall -Werror -o binhttpd binhttpd.c
-
-# create 
-
-mkdir -p ~/opt/binhttpd/usr/sbin
-
-mkdir -p ~/opt/binhttpd/etc
-mkdir -p ~/opt/binhttpd/var/log
-mkdir -p ~/opt/binhttpd/srv/http/root
+# script erreur
+set -e
 
 
-cp binhttpd ~/opt/binhttpd/usr/sbin/
+# Variables
+SOURCE_FILE="binhttpd.c"
+BINARY_NAME="binhttpd"
+
+INSTALL_DIR="$HOME/opt/binhttpd"
+BIN_DIR="$INSTALL_DIR/usr/sbin"
+
+CONF_DIR="$INSTALL_DIR/etc"
+LOG_DIR="$INSTALL_DIR/var/log"
+SRV_DIR="$INSTALL_DIR/srv/http"
+
+DEFAULT_CONF_FILE="$CONF_DIR/binhttpd.conf"
+
+# Compilation
+
+echo "Compiling $SOURCE_FILE..."
+gcc -Wall -Werror -o "$BINARY_NAME" "$SOURCE_FILE"
+
+# répertoires d'installation
+echo "Creating installation directories..."
+mkdir -p "$BIN_DIR" "$CONF_DIR" "$LOG_DIR" "$SRV_DIR"
 
 
+echo "Installing $BINARY_NAME to $BIN_DIR..."
+cp "$BINARY_NAME" "$BIN_DIR/"
 
-if [ ! -f ~/opt/binhttpd/etc/binhttpd.conf ]; then
-    cp binhttpd.conf ~/opt/binhttpd/etc/
+# fichier de configuration par défaut
+
+echo "Creating default configuration file at $DEFAULT_CONF_FILE..."
+cat > "$DEFAULT_CONF_FILE" <<EOF
+[binhttpd]
+debug = off
+port = 42064
+logfile = "$LOG_DIR/binhttpd.log"
+
+
+[default]
+location = "/"
+index = "index.html"
+root = "$SRV_DIR"
+EOF
+
+
+# installation . 
+echo "Verifying installation..."
+if [[ -f "$BIN_DIR/$BINARY_NAME" && -f "$DEFAULT_CONF_FILE" ]]; then
+    echo "Installation successful!"
+else
+    echo "Installation failed!"
+    exit 1
 fi
 
-if [ ! -f ~/opt/binhttpd/var/log/binhttpd.log ]; then
-    touch ~/opt/binhttpd/var/log/binhttpd.log
-fi
-
-echo "install finish"
