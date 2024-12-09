@@ -31,7 +31,7 @@
 // Définit des constantes utilisées dans le programme
 #define BUFFER_SIZE 1024 // Taille du tampon pour la lecture/écriture de données
 #define DEFAULT_PORT 42064 // Port par défaut pour le serveur HTTP
-#define DEFAULT_ROOT "/home/2024/a2-bin/cp231385/opt/binhttpd/srv/http" 
+#define DEFAULT_ROOT "/home/2024/a2-bin/al231388/opt/binhttpd/srv/http" 
 // Répertoire racine par défaut pour le serveur (où se trouvent les fichiers à servir)
 
 #define DEFAULT_INDEX "index.html" 
